@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import axios from 'axios';
 
 import './configForm.css';
 import {config} from '../../config';
@@ -20,8 +21,12 @@ class ConfigForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    window.localStorage.setItem('databaseHost', e.target[0].value);
-    window.localStorage.setItem('year', e.target[1].value);
+    window.localStorage.setItem('databaseHost', e.target[0].value.replace(/\/$/, ""));
+    window.localStorage.setItem('databaseToken', e.target[1].value);
+    window.localStorage.setItem('year', e.target[2].value);
+
+    axios.defaults.headers.common['token'] = e.target[1].value;
+
     window.location.reload();
   }
 
@@ -37,13 +42,19 @@ class ConfigForm extends Component {
           <div className="grid-x grid-padding-x">
             <div className="cell configForm__error">{this.props.errorMessage}</div>
 
-            <div className="cell large-8">
+            <div className="cell large-7">
               <label>DB Host URL
                 <input type="text" placeholder="Set full host to DB here" defaultValue={config.databaseHost}/>
               </label>
             </div>
 
-            <div className="cell large-4">
+            <div className="cell large-3">
+              <label>Token
+                <input type="text" placeholder="Set security token" defaultValue={config.databaseToken}/>
+              </label>
+            </div>
+
+            <div className="cell large-2">
               <label>Year
                 <select defaultValue={config.year}>
                   {yearOptions}

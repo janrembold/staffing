@@ -8,18 +8,19 @@ import {
   updateProjectSuccess,
   addUserSuccess, updateUserSuccess, addUserCustomDaySuccess, updateUserCustomDaySuccess
 } from './actions';
-import axios from 'axios';
 import store from './index';
 import {config} from '../config';
+import axios from 'axios';
+import {defaultConfig} from "../vendor/axios/config";
 
 export function loadDb() {
   return dispatch => {
     dispatch(loadDbBegin());
 
     return axios.all([
-      axios.get(`${config.databaseHost}/users`),
-      axios.get(`${config.databaseHost}/projects?year=${config.year}&closed=false`),
-      axios.get(`${config.databaseHost}/userCustomDays?year=${config.year}`)
+      axios.get(`${config.databaseHost}/users`, defaultConfig()),
+      axios.get(`${config.databaseHost}/projects?year=${config.year}&closed=false`, defaultConfig()),
+      axios.get(`${config.databaseHost}/userCustomDays?year=${config.year}`, defaultConfig())
     ]).then(axios.spread((users, projects, userCustomDays) => {
       dispatch(loadDbSuccess({
         users: users.data,
@@ -41,12 +42,12 @@ export function closeProject(projectId) {
     const project = Object.assign({}, projects.find((item) => item.id === projectId));
     project.closed = true;
 
-    return axios({
+    return axios(defaultConfig({
       method: 'PUT',
       url: `${config.databaseHost}/projects/${project.id}`,
       headers: { 'Content-Type': 'application/json' },
       data: project
-    })
+    }))
       .then((response) => {
         dispatch(closeProjectSuccess(response.data));
       })
@@ -66,12 +67,12 @@ export function addStaffings(projectId, staffings) {
     const project = Object.assign({}, projects.find((item) => item.id === projectId));
     project.staffings.push(...staffings);
 
-    return axios({
+    return axios(defaultConfig({
       method: 'PUT',
       url: `${config.databaseHost}/projects/${project.id}`,
       headers: { 'Content-Type': 'application/json' },
       data: project
-    })
+    }))
       .then((response) => {
         dispatch(addStaffingSuccess(response.data));
       })
@@ -91,12 +92,12 @@ export function removeStaffing(projectId, userId, week, days) {
     const project = Object.assign({}, projects.find((item) => item.id === projectId));
     project.staffings.splice(project.staffings.findIndex(elem => (elem.userId === userId && elem.week === week && elem.days === days)), 1);
 
-    return axios({
+    return axios(defaultConfig({
       method: 'PUT',
       url: `${config.databaseHost}/projects/${projectId}`,
       headers: { 'Content-Type': 'application/json' },
       data: project
-    })
+    }))
       .then((response) => {
         dispatch(updateProjectSuccess(response.data));
       })
@@ -112,12 +113,12 @@ export function addProject(project) {
   return dispatch => {
     // dispatch(loadDbBegin());
 
-    return axios({
+    return axios(defaultConfig({
       method: 'POST',
       url: `${config.databaseHost}/projects`,
       headers: { 'Content-Type': 'application/json' },
       data: project
-    })
+    }))
       .then((response) => {
         dispatch(addProjectSuccess(response.data));
       })
@@ -132,12 +133,12 @@ export function updateProject(project) {
   return dispatch => {
     // dispatch(loadDbBegin());
 
-    return axios({
+    return axios(defaultConfig({
       method: 'PUT',
       url: `${config.databaseHost}/projects/${project.id}`,
       headers: { 'Content-Type': 'application/json' },
       data: project
-    })
+    }))
       .then((response) => {
         dispatch(updateProjectSuccess(response.data));
       })
@@ -152,12 +153,12 @@ export function addUser(user) {
   return dispatch => {
     // dispatch(loadDbBegin());
 
-    return axios({
+    return axios(defaultConfig({
       method: 'POST',
       url: `${config.databaseHost}/users`,
       headers: { 'Content-Type': 'application/json' },
       data: user
-    })
+    }))
       .then((response) => {
         dispatch(addUserSuccess(response.data));
       })
@@ -172,12 +173,12 @@ export function updateUser(user) {
   return dispatch => {
     // dispatch(loadDbBegin());
 
-    return axios({
+    return axios(defaultConfig({
       method: 'PUT',
       url: `${config.databaseHost}/users/${user.id}`,
       headers: { 'Content-Type': 'application/json' },
       data: user
-    })
+    }))
       .then((response) => {
         dispatch(updateUserSuccess(response.data));
       })
@@ -192,12 +193,12 @@ export function addUserCustomDay(userCustomDay) {
   return dispatch => {
     // dispatch(loadDbBegin());
 
-    return axios({
+    return axios(defaultConfig({
       method: 'POST',
       url: `${config.databaseHost}/userCustomDays`,
       headers: { 'Content-Type': 'application/json' },
       data: userCustomDay
-    })
+    }))
       .then((response) => {
         dispatch(addUserCustomDaySuccess(response.data));
       })
@@ -212,12 +213,12 @@ export function updateUserCustomDay(userCustomDay) {
   return dispatch => {
     // dispatch(loadDbBegin());
 
-    return axios({
+    return axios(defaultConfig({
       method: 'PUT',
       url: `${config.databaseHost}/userCustomDays/${userCustomDay.id}`,
       headers: { 'Content-Type': 'application/json' },
       data: userCustomDay
-    })
+    }))
       .then((response) => {
         dispatch(updateUserCustomDaySuccess(response.data));
       })
