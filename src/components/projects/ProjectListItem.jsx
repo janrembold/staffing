@@ -9,7 +9,7 @@ import DescriptionList from '../descriptionList/DescriptionList';
 import StaffingForm from '../staffing/StaffingForm';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import './react-tabs.css';
-import {getProjectStatusTranslation} from '../../staffing/projectStatus';
+import {getProjectStatusByKey} from '../../staffing/projectStatus';
 
 class ProjectListItem extends Component {
   constructor(props) {
@@ -73,7 +73,7 @@ class ProjectListItem extends Component {
     addToList('Project number', `${project.number}`, project.number);
     addToList('Project Manager', `${project.manager}`, project.manager);
     addToList('Favored Developer', `${project.developer}`, project.developer);
-    addToList('Status', getProjectStatusTranslation(project.status));
+    addToList('Status', getProjectStatusByKey(project.status));
 
     return descriptions;
   }
