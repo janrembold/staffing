@@ -1,25 +1,15 @@
 export const PROJECT_STATUS = {
-  'ORDERED': 'ordered',
-  'HOLD': 'hold',
-  'BLOCKER': 'blocker'
+  'NEW': 'New Project',
+  'SEARCH': 'Search for resources',
+  'WAITFEEDBACK': 'Waiting for feedback',
+  'HOLD': 'On hold',
+  'BLOCKER': 'Blocker',
+  'ACTIVE': 'Active Development'
 };
 
-const i18n = {};
-const addTranslation = (language, key, value) => {
-  if(!i18n[language]) {
-    i18n[language] = {};
+export const getProjectStatusByKey = (key) => {
+  if(!PROJECT_STATUS[key]) {
+    return `Unknown project status translation for key = "${key}"`;
   }
-
-  i18n[language][key] = value;
-};
-
-addTranslation('en', PROJECT_STATUS.ORDERED, 'Ordered');
-addTranslation('en', PROJECT_STATUS.HOLD, 'On Hold');
-addTranslation('en', PROJECT_STATUS.BLOCKER, 'Blocker (Not ordered yet)');
-
-export const getProjectStatusTranslation = (key, language = 'en') => {
-  if(!i18n[language] || !i18n[language][key]) {
-    return `Unknown project status translation for key = "${key}" and language = ${language}`;
-  }
-  return i18n[language][key];
+  return PROJECT_STATUS[key];
 };
