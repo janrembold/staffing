@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import ProjectListItem from './ProjectListItem';
 import './projectListItem.css';
 import { getProjectStatusByKey, NEW, SEARCH, WAITFEEDBACK, HOLD, BLOCKER, ACTIVE } from '../../staffing/projectStatus';
+import './projects.css';
 
 const mapStateToProps = state => {
   const projects = state.data.projects;
@@ -15,7 +16,7 @@ class Projects extends Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      filter: ''
+      filter: 'ALL'
     };
   }
 
@@ -40,7 +41,11 @@ class Projects extends Component {
         text = 'All';
       }
 
-      const content = count > 0 ? (<a onClick={this.handleClick} data-filter={key}>{text} ({count})</a>) : `${text} (${count})`;
+      const content = count > 0 ? (
+          <a onClick={this.handleClick} class={`projects__filterLink ${filter === key ? 'projects__filterLink--active' : ''}`} data-filter={key}>
+            {text} ({count})
+          </a>
+        ) : `${text} (${count})`;
       return (<li key={key}>{content}</li>);
     };
 
