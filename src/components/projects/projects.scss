@@ -1,0 +1,22 @@
+.projects {
+  &__filterList {
+    list-style: none;
+    margin: 0;
+
+    > li {
+      margin-top: 5px;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+
+  &__filterLink {
+    font-weight: bold;
+
+    &--active {
+      text-decoration: underline;
+    }
+  }
+}

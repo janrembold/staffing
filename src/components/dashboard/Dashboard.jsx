@@ -52,13 +52,8 @@ class Dashboard extends Component {
         </div>
 
         <div className="grid-x grid-padding-x">
-          <div className="cell large-6">
-            <h4>Open projects</h4>
-            <Projects staffed={false} />
-          </div>
-          <div className="cell large-6">
-            <h4>Active projects</h4>
-            <Projects staffed={true} />
+          <div className="cell">
+            <Projects />
           </div>
         </div>
       </div>

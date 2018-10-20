@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getWeekNumber } from '../../staffing/dateHelper';
-import { PROJECT_STATUS, getProjectStatusTranslation } from '../../staffing/projectStatus';
+import { PROJECT_STATUS, getProjectStatusByKey } from '../../staffing/projectStatus';
 import { addProject, updateProject } from '../../store/thunks';
 import store from '../../store';
 import PropTypes from 'prop-types';
@@ -15,7 +15,7 @@ const defaultState = {
     customer: '',
     name: '',
     number: '',
-    status: PROJECT_STATUS.ORDERED,
+    status: PROJECT_STATUS.NEW,
     manager: '',
     developer: '',
     description: '',
@@ -111,6 +111,16 @@ class ProjectForm extends Component {
       }
     }
 
+    const addStatusOption = (key) => (<option key={key} value={key}>{getProjectStatusByKey(key)}</option>);
+    const statusOptions = [ addStatusOption('NEW') ];
+    if(id) {
+      statusOptions.push(addStatusOption('SEARCH'));
+      statusOptions.push(addStatusOption('WAITFEEDBACK'));
+      statusOptions.push(addStatusOption('HOLD'));
+      statusOptions.push(addStatusOption('BLOCKER'));
+      statusOptions.push(addStatusOption('ACTIVE'));
+    }
+
     if(newProjectWasCreated) {
       newProjectWasCreatedInfo = <span className="projectForm__success"><span role="img" aria-label="">👍</span> Project was saved</span>;
 
@@ -182,9 +192,7 @@ class ProjectForm extends Component {
                   onChange={this.handleChange}
                   value={status}
                 >
-                  <option value={PROJECT_STATUS.ORDERED}>{getProjectStatusTranslation(PROJECT_STATUS.ORDERED)}</option>
-                  <option value={PROJECT_STATUS.HOLD}>{getProjectStatusTranslation(PROJECT_STATUS.HOLD)}</option>
-                  <option value={PROJECT_STATUS.BLOCKER}>{getProjectStatusTranslation(PROJECT_STATUS.BLOCKER)}</option>
+                  {statusOptions}
                 </select>
               </label>
             </div>

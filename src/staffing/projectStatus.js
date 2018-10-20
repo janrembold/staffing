@@ -1,25 +1,23 @@
+export const NEW = 'NEW';
+export const SEARCH = 'SEARCH';
+export const WAITFEEDBACK = 'WAITFEEDBACK';
+export const HOLD = 'HOLD';
+export const BLOCKER = 'BLOCKER';
+export const ACTIVE = 'ACTIVE';
+
 export const PROJECT_STATUS = {
-  'ORDERED': 'ordered',
-  'HOLD': 'hold',
-  'BLOCKER': 'blocker'
+  NEW: 'New Project',
+  SEARCH: 'Search for resources',
+  WAITFEEDBACK: 'Waiting for feedback',
+  HOLD: 'On hold',
+  BLOCKER: 'Blocker',
+  ACTIVE: 'Active Development'
 };
 
-const i18n = {};
-const addTranslation = (language, key, value) => {
-  if(!i18n[language]) {
-    i18n[language] = {};
+export const getProjectStatusByKey = (key) => {
+  const uppercaseKey = key.toUpperCase();
+  if(!PROJECT_STATUS[uppercaseKey]) {
+    return `Unknown project status translation for key = "${key}"`;
   }
-
-  i18n[language][key] = value;
-};
-
-addTranslation('en', PROJECT_STATUS.ORDERED, 'Ordered');
-addTranslation('en', PROJECT_STATUS.HOLD, 'On Hold');
-addTranslation('en', PROJECT_STATUS.BLOCKER, 'Blocker (Not ordered yet)');
-
-export const getProjectStatusTranslation = (key, language = 'en') => {
-  if(!i18n[language] || !i18n[language][key]) {
-    return `Unknown project status translation for key = "${key}" and language = ${language}`;
-  }
-  return i18n[language][key];
+  return PROJECT_STATUS[uppercaseKey];
 };
