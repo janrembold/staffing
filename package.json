@@ -32,7 +32,8 @@
     "eject": "react-scripts eject",
     "json-server": "json-server --watch --port 5000 db.json",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "netlify": "yarn build && cp netlify.toml ./build/netlify.toml"
   },
   "devDependencies": {
     "gh-pages": "^2.0.1"
