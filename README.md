@@ -16,3 +16,11 @@ Run `yarn start` - that starts react-scripts, scss watcher and the json-server
 - Run `yarn build` to create an optimized production build
 - Copy created `build` folder to the server
 - Run `yarn json-server` on the server to start JSON Server
+
+
+## Docker JSON Server
+### building docker image
+`docker build -t janrembold/staffingserver .`
+
+### starting docker server instance
+`docker run -p 5544:5544 -v YOUR_PATH/db:/app/db janrembold/staffingserver`
