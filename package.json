@@ -30,7 +30,7 @@
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "json-server": "json-server --watch --port 5000 db.json",
+    "json-server": "json-server --watch --port 5000 db/db.json",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build"
   },
