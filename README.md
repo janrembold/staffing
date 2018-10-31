@@ -19,8 +19,11 @@ Run `yarn start` - that starts react-scripts, scss watcher and the json-server
 
 
 ## Docker JSON Server
-### building docker image
-`docker build -t janrembold/staffingserver .`
+### building docker images
+`docker build -t virtualidentity/staffingserver .`
+`docker build -f Dockerfile-FE -t virtualidentity/staffingfrontend .`
 
-### starting docker server instance
-`docker run -p 5544:5544 -v YOUR_PATH/db:/app/db janrembold/staffingserver`
+### starting docker server instances
+`docker run -p 5544:5544 -v YOUR_PATH/db:/app/db virtualidentity/staffingserver`
+
+`docker run -p 5000:5000 virtualidentity/staffingfrontend`

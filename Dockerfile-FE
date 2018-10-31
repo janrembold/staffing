@@ -1,0 +1,15 @@
+FROM node:8
+RUN mkdir app
+WORKDIR /app
+ADD . /app
+RUN npm install
+RUN npm run build
+
+FROM node:carbon-alpine
+RUN mkdir app
+WORKDIR /app
+COPY --from=0 /app/build /app
+RUN npm init -y
+RUN npm install serve
+EXPOSE 5000
+ENTRYPOINT ./node_modules/.bin/serve
