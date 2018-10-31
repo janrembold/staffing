@@ -42,7 +42,7 @@ class Projects extends Component {
       }
 
       const content = count > 0 ? (
-          <a onClick={this.handleClick} class={`projects__filterLink ${filter === key ? 'projects__filterLink--active' : ''}`} data-filter={key}>
+          <a onClick={this.handleClick} className={`projects__filterLink ${filter === key ? 'projects__filterLink--active' : ''}`} data-filter={key}>
             {text} ({count})
           </a>
         ) : `${text} (${count})`;
